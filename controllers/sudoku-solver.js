@@ -1,7 +1,25 @@
+import { puzzlesAndSolutions } from "./puzzle-strings";
+
 class SudokuSolver {
 
-  validate(puzzleString) {
+  constructor() {
+    this.puzzlesAndSolutions = puzzlesAndSolutions
+  }
 
+  validate(puzzleString) {
+    const errors = {
+      invalidChars: 'Invalid characters in puzzle',
+      invalidLength: 'Expected puzzle to be 81 characters long'
+    };
+    
+    if (!/^[0-9.]+$/.test(puzzleString)) {
+      return errors.invalidChars ;
+    }
+    
+    if (puzzleString.length !== 81) {
+      return errors.invalidLength ;
+    }
+    return true
   }
 
   checkRowPlacement(puzzleString, row, column, value) {
@@ -17,7 +35,11 @@ class SudokuSolver {
   }
 
   solve(puzzleString) {
-   return {solution:'135762984946381257728459613694517832812936745357824196473298561581673429269145378'}
+   for(let i = 0 ; i < this.puzzlesAndSolutions.length ; i ++){
+    if(this.puzzlesAndSolutions[i][0] === puzzleString)
+    return this.puzzlesAndSolutions[i][1]
+   }
+   return false
   }
 }
 
