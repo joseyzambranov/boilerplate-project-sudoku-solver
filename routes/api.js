@@ -19,26 +19,8 @@ module.exports = function (app) {
       if(!puzzle){
         return res.json({ error: 'Required field missing' })
       }
-      //if(solver.validate(puzzle)){
-      //  return res.json( solver.solve(puzzle))
-      //}
-      //return res.json(solver.validate(puzzle) );
-      //const errors = {
-      //  invalidChars: 'Invalid characters in puzzle',
-      //  invalidLength: 'Expected puzzle to be 81 characters long'
-      //};
-      
-      //if (!/^[0-9.]+$/.test(puzzle)) {
-      //  return res.json({"error" : errors.invalidChars}) ;
-      //}
-      //
-      //if (puzzle.length !== 81) {
-      //  return res.json({"error" : errors.invalidLength})  ;
-      //}
 
       let validate = solver.validate(puzzle)
-
-      console.log(validate)
 
       if(validate != true){
         return res.json( { error : validate } )
