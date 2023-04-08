@@ -24,6 +24,10 @@ class SudokuSolver {
 
   checkRowPlacement(puzzleString, row, column, value) {
 
+    //if(!/^[0-9.]+$/.test(puzzleString)){
+//
+    //}
+
   }
 
   checkColPlacement(puzzleString, row, column, value) {
@@ -31,7 +35,26 @@ class SudokuSolver {
   }
 
   checkRegionPlacement(puzzleString, row, column, value) {
+    let puzzleResult
+    for(let i = 0 ; i < this.puzzlesAndSolutions.length ; i ++){
+      if(this.puzzlesAndSolutions[i][0] === puzzleString)
+      puzzleResult = this.puzzlesAndSolutions[i][1]
+     }
 
+     //for(let i = 0 ; i < this.puzzleString.length ; i ++){
+     // if(this.puzzleString[i] === value)
+     // return {valid:false ,conflict: [ "region" ] }
+     //}
+
+
+     //if(!puzzleResult){
+     // return {valid:false ,conflict: [ "region" ] } 
+     //}
+
+     if(puzzleResult[row][column] == value){
+      return {valid :true}
+     }
+     return {valid:false ,conflict: [ "row", "column" ] }
   }
 
   solve(puzzleString) {
