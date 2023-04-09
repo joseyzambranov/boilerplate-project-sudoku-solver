@@ -23,38 +23,58 @@ class SudokuSolver {
   }
 
   checkRowPlacement(puzzleString, row, column, value) {
-
-    //if(!/^[0-9.]+$/.test(puzzleString)){
-//
-    //}
-
+    const rowString = puzzleString.slice( (row ) * 9 , ( row + 1 ) * 9 )
+    //const conflict = []
+    console.log('checkRowPlacement')
+    console.log({rowString})
+    console.log({row})
+    console.log({value})
+    if(rowString.includes(value)){
+      //conflict.push("row")
+      return false
+    }
+    //return conflict.length === 0 ? true : conflict
+    return true
   }
 
   checkColPlacement(puzzleString, row, column, value) {
-
+    let columnString = ""
+    //const conflict = []
+    
+    console.log({column})
+    console.log({value})
+    for(let i = 0 ; i < 9 ; i ++){
+      columnString += puzzleString[ i * 9 + column ]
+    }
+    console.log({columnString})
+    if(columnString.includes(value)){
+      //conflict.push("row")
+      return false
+    }
+    //return conflict.length === 0 ? true : conflict
+    return true
   }
 
   checkRegionPlacement(puzzleString, row, column, value) {
-    let puzzleResult
-    for(let i = 0 ; i < this.puzzlesAndSolutions.length ; i ++){
-      if(this.puzzlesAndSolutions[i][0] === puzzleString)
-      puzzleResult = this.puzzlesAndSolutions[i][1]
-     }
-
-     //for(let i = 0 ; i < this.puzzleString.length ; i ++){
-     // if(this.puzzleString[i] === value)
-     // return {valid:false ,conflict: [ "region" ] }
-     //}
-
-
-     //if(!puzzleResult){
-     // return {valid:false ,conflict: [ "region" ] } 
-     //}
-
-     if(puzzleResult[row][column] == value){
-      return {valid :true}
-     }
-     return {valid:false ,conflict: [ "row", "column" ] }
+    let regionRow = Math.floor(( row / 3 ) * 3 )
+    let regionCol = Math.floor(( column / 3 ) * 3 )
+    let regionString = []
+    for(let i = 0 ; i < 3 ; i++){
+      for(let j = 0 ; j < 3 ; j ++){
+        let rowIndex = regionRow + i;
+        let colIndex = regionCol + j;
+        let cellValue = puzzleString.charAt(rowIndex * 9 + colIndex);
+        if (cellValue === value) {
+          return false;
+        } 
+        regionString.push(cellValue)
+      }
+      console.log({regionString})
+      if (regionString.includes(value)) {
+        return false;
+      }
+      return true;
+    }
   }
 
   solve(puzzleString) {
