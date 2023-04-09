@@ -56,8 +56,11 @@ class SudokuSolver {
   }
 
   checkRegionPlacement(puzzleString, row, column, value) {
-    let regionRow = Math.floor(( row / 3 ) * 3 )
-    let regionCol = Math.floor(( column / 3 ) * 3 )
+    //let regionRow = Math.floor(( row / 3 ) * 3 )
+    //let regionCol = Math.floor(( column / 3 ) * 3 )
+
+    let regionCol = Math.floor(( row / 3 ) * 3 )
+    let regionRow = Math.floor(( column / 3 ) * 3 )
     let regionString = []
     for(let i = 0 ; i < 3 ; i++){
       for(let j = 0 ; j < 3 ; j ++){
@@ -69,12 +72,12 @@ class SudokuSolver {
         } 
         regionString.push(cellValue)
       }
-      console.log({regionString})
+    }
+    console.log({regionString})
       if (regionString.includes(value)) {
         return false;
       }
       return true;
-    }
   }
 
   solve(puzzleString) {
