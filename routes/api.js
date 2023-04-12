@@ -26,10 +26,6 @@ module.exports = function (app) {
       if (!valueRegex.test(value)) {
         return res.json({ error: 'Invalid value' });
       }
-
-      //let colIndex = coordinate.charCodeAt(0)-65;
-      //let rowIndex = parseInt(coordinate.charAt(1)-1);
-
       let rowIndex = coordinate.charCodeAt(0)-65;
       let colIndex = parseInt(coordinate.charAt(1)-1);
       
@@ -39,21 +35,10 @@ module.exports = function (app) {
       }
 
       let result = solver.solve(puzzle)
-      //
-      //console.log({result})
-      //console.log("result",result[rowIndex][colIndex])
-      //if(result[rowIndex][colIndex] == value){
-      //  return res.json({valid :true})
-      // }
 
       if (puzzle.charAt(rowIndex * 9 + colIndex) === value) {
         return res.json({valid: true});
       }
-
-      //let puzzleArray = result.flat();
-      //if (puzzleArray[rowIndex * 9 + colIndex] == value) {
-      //  return res.json({ valid: true });
-      //}
       let currentValue = puzzle[rowIndex * 9 + colIndex];
 
       if (result[rowIndex][colIndex] == value) {
@@ -61,20 +46,16 @@ module.exports = function (app) {
       } else if (currentValue != '.' && currentValue == value) {
         return res.json({ valid: false, conflict: conflict });
       }
-
-
        let validRow = solver.checkRowPlacement(puzzle,rowIndex,colIndex,value)
-       console.log(validRow)
+      
        if(!validRow){
          conflict.push("row")
        }
        let validColumn = solver.checkColPlacement(puzzle,rowIndex,colIndex,value)
-       console.log(validColumn)
        if(!validColumn){
          conflict.push("column")
        }
        let validRegion = solver.checkRegionPlacement(puzzle,rowIndex,colIndex,value)
-       console.log(validRegion)
        if(!validRegion){
          conflict.push("region")
        }
@@ -83,7 +64,6 @@ module.exports = function (app) {
       } else {
         return res.json({ valid: true });
       }
-      
     });
     
   app.route('/api/solve')

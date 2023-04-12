@@ -5,77 +5,98 @@ const Solver = require('../controllers/sudoku-solver.js');
 let solver;
 
 suite('Unit Tests', () => {
-
-    test('Logic handles a valid puzzle string of 81 characters', () => {
-        const validPuzzle = '123456789456789123789123456234567891567891234891234567345678912678912345912345678';
+      test('Logic handles a valid puzzle string of 81 characters', () => {
+        const validPuzzle = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
         solver = new Solver();
-        assert.doesNotThrow(() => solver.validate(validPuzzle), TypeError, 'Throws TypeError');
+        let expected = true;
+        assert.equal(solver.validate(validPuzzle), expected);
       });
-
       test('Logic handles a puzzle string with invalid characters (not 1-9 or .)', () => {
-        const validPuzzle = 'xii';
+        const validPuzzle = 'xxi';
         solver = new Solver();
-        assert.doesNotThrow(() => solver.validate(validPuzzle), TypeError, 'Throws TypeError');
-      });  
+        let expected = 'Invalid characters in puzzle';
+        assert.equal(solver.validate(validPuzzle), expected);
+      });
 
       test('Logic handles a puzzle string that is not 81 characters in length', () => {
         const validPuzzle = '12345678945678912378912345623456789156789123489123456734567891267891234591234567';
         solver = new Solver();
-        assert.doesNotThrow(() => solver.validate(validPuzzle), TypeError, 'Throws TypeError');
+        let expected = 'Expected puzzle to be 81 characters long';
+        assert.equal(solver.validate(validPuzzle), expected);
       });  
       test('Logic handles a valid row placement', () => {
-        let puzzle = '12345678945678912378912345623456789156789123489123456734567891267891234591234567' , 
-        coordinate = 'A1', 
-        value ="7";
+        const puzzleString = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
+        const row = 0;
+        const column = 5;
+        const value = '7';
         solver = new Solver();
-        assert.doesNotThrow(() => solver.checkRowPlacement(puzzle,coordinate,value), TypeError, 'Throws TypeError');
+        let expected = true;
+        assert.equal(solver.checkRowPlacement(puzzleString, row, column, value), expected);
       });  
+
       test('Logic handles an invalid row placement', () => {
+        const puzzleString = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
+        const row = 0;
+        const column = 5;
+        const value = '1';
         solver = new Solver();
-        assert.doesNotThrow(() => solver.checkRowPlacement(puzzle,coordinate,value), TypeError, 'Throws TypeError');
-      });  
+        let expected = false;
+        assert.equal(solver.checkRowPlacement(puzzleString, row, column, value), expected);
+      });
       test('Logic handles a valid column placement', () => {
-        let puzzle = '12345678945678912378912345623456789156789123489123456734567891267891234591234567' , 
-        coordinate = 'A1', 
-        value ="7";
+        const puzzleString = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
+        const row = 0;
+        const column = 0;
+        const value = '7';
         solver = new Solver();
-        assert.doesNotThrow(() => solver.checkColPlacement(puzzle,coordinate,value), TypeError, 'Throws TypeError');
+        let expected = true;
+        assert.equal(solver.checkColPlacement(puzzleString, row, column, value), expected);
       });  
       test('Logic handles an invalid column placement', () => {
+        const puzzleString = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
+        const row = 0;
+        const column = 0;
+        const value = '1';
         solver = new Solver();
-        assert.doesNotThrow(() => solver.checkColPlacement(puzzle,coordinate,value), TypeError, 'Throws TypeError');
+        let expected = false;
+        assert.equal(solver.checkColPlacement(puzzleString, row, column, value), expected);
       });  
       test('Logic handles a valid region (3x3 grid) placement', () => {
-        let puzzle = '12345678945678912378912345623456789156789123489123456734567891267891234591234567' , 
-        coordinate = 'A1', 
-        value ="7";
+        const puzzleString = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
+        const row = 0;
+        const column = 0;
+        const value = '7';
         solver = new Solver();
-        assert.doesNotThrow(() => solver.checkRegionPlacement(puzzle,coordinate,value), TypeError, 'Throws TypeError');
+        let expected = true;
+        assert.equal(solver.checkRegionPlacement(puzzleString, row, column, value), expected);
       });  
       test('Logic handles an invalid region (3x3 grid) placement', () => {
+        const puzzleString = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
+        const row = 0;
+        const column = 0;
+        const value = '9';
         solver = new Solver();
-        assert.doesNotThrow(() => solver.checkRegionPlacement(puzzle,coordinate,value), TypeError, 'Throws TypeError');
+        let expected = false;
+        assert.equal(solver.checkRegionPlacement(puzzleString, row, column, value), expected);
       });  
       test('Valid puzzle strings pass the solver', () => {
-        let puzzle = '12345678945678912378912345623456789156789123489123456734567891267891234591234567' , 
-        coordinate = 'A1', 
-        value ="7";
+        let puzzle = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..' , 
         solver = new Solver();
-        assert.doesNotThrow(() => solver.validate(puzzle), TypeError, 'Throws TypeError');
+        let expected = true;
+        assert.equal(solver.validate(puzzle), expected);
+
       });  
       test('Invalid puzzle strings fail the solver', () => {
-        let puzzle = '1234567894567891237891234kju3456789156789123489123456734567891267891234591234567' , 
-        coordinate = 'A1', 
-        value ="7";
+        let puzzle = '1.9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..' , 
         solver = new Solver();
-        assert.doesNotThrow(() => solver.validate(puzzle), TypeError, 'Throws TypeError');
+        let expected = false;
+        assert.equal(solver.solve(puzzle), expected);
       });  
       test('Solver returns the expected solution for an incomplete puzzle', () => {
-        let puzzle = '12345678945678912378912345623456789156789123489123456734567891267891234591234567' , 
-        coordinate = 'A1', 
-        value ="7";
+        let puzzle = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..' , 
         solver = new Solver();
-        assert.doesNotThrow(() => solver.solve(puzzle), TypeError, 'Throws TypeError');
+        let expected = "769235418851496372432178956174569283395842761628713549283657194516924837947381625";
+        assert.equal(solver.solve(puzzle), expected);
       });  
 
 });
